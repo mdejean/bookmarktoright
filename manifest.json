@@ -1,0 +1,34 @@
+{
+  "name": "Bookmark Tabs to the Right",
+  "description": "Bookmark tabs to the right of a tab by right clicking or the current tab with a key command",
+  "homepage_url": "https://github.com/mdejean/bookmarktoright",
+  "manifest_version": 2,
+  "version": "1.0",
+  "icons": {
+    "16": "bookmarkright.svg",
+    "48": "bookmarkright.svg",
+    "96": "bookmarkright.svg"
+  },
+  "applications": {
+    "gecko": {
+      "strict_min_version": "55.0a1"
+    }
+  },
+  
+  "commands": {
+    "bookmark-right": {
+      "suggested_key": { "default": "Ctrl+Shift+Period" },
+      "description": "Bookmark tabs to the right"
+    }
+  },
+
+  "permissions": [
+    "bookmarks",
+    "tabs",
+    "contextMenus"
+  ],
+  
+  "background": {
+    "scripts": ["background.js"]
+  }
+}
