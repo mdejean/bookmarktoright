@@ -24,7 +24,6 @@ function populateTable() {
        and doesn't take relative changes so we need to measure the difference */
     browser.windows.get(browser.windows.WINDOW_ID_CURRENT).then(
         (win) => {
-            console.log(win.height, document.documentElement.scrollHeight, old_height)
             browser.windows.update(browser.windows.WINDOW_ID_CURRENT, {
                     height: win.height + document.documentElement.scrollHeight - old_height
                 });
@@ -65,7 +64,7 @@ browser.bookmarks.getTree().then(
         }
         
         document.getElementById('folder').append(...opts);
-    }, console.log);
+    });
 
 function close() {
     browser.windows.remove(browser.windows.WINDOW_ID_CURRENT);
@@ -99,7 +98,7 @@ document.getElementById('ok').addEventListener('click', (ev) => {
             browser.bookmarks.create({
                     title: document.getElementById('name').value, 
                     parentId: document.getElementById('folder').value
-                }).then((node) => {f(node.id)}, console.log);
+                }).then((node) => {f(node.id)});
         } else {
             f(document.getElementById('folder').value);
         }

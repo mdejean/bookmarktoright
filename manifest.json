@@ -3,7 +3,7 @@
   "description": "Bookmark tabs to the right of a tab by right clicking or the current tab with a key command",
   "homepage_url": "https://github.com/mdejean/bookmarktoright",
   "manifest_version": 2,
-  "version": "1.0",
+  "version": "1.2",
   "icons": {
     "16": "bookmarkright.svg",
     "48": "bookmarkright.svg",

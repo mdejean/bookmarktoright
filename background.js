@@ -18,7 +18,7 @@ function showBookmarkWindow(tabs) {
                         browser.tabs.onUpdated.removeListener(this);
                     }
                 });
-        }, onerror);
+        });
 }
 
 function bookmarkRight(window, index) {
