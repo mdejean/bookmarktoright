@@ -10,6 +10,7 @@ function showBookmarkWindow(tabs) {
                         browser.runtime.sendMessage({
                                 type: "add-bookmarks",
                                 pages: tabs.map((t) => ({
+                                            id: t.id,
                                             index: t.index, 
                                             title: t.title, 
                                             url: t.url})
