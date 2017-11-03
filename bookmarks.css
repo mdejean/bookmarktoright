@@ -64,13 +64,25 @@ html, body {
 
 input[type=checkbox] {
 	-moz-appearance: none;
+
 	margin: 0;
-	
+	margin-inline-end: 10px;
+
 	-moz-context-properties: fill, stroke;
 	fill: #2292d0;
 	stroke: none;
 	width: 21px;
 	height: 21px;
+
+	background-color: white;
+	border: 1px solid #d7d7db;
+	border-radius: 2px;
+}
+
+
+.grid input[type=checkbox] {
+	border: 0;
+	background-color: inherit;
 }
 
 input[type=checkbox]:checked {
@@ -90,12 +102,20 @@ input[type=checkbox]:checked {
 .content > label {
 	margin-top: 3px;
 	grid-column: 1;
+
+	display: flex;
+}
+
+.content > label.check {
+	margin-top: 0;
+	grid-column-end: 3;
+	align-items: center;
 }
 
 #bookmarks {
 	display: grid;
 	grid-gap: 3px;
-	
+
 	overflow-y: scroll;
 	max-height: 250px;
 	padding: 5px;
