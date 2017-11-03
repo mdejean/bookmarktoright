@@ -70,38 +70,38 @@ function close() {
     browser.windows.remove(browser.windows.WINDOW_ID_CURRENT);
 }
 
-document.getElementById('ok').addEventListener('click', (ev) => {
-        function f(folder) {
-            let promises = []
-            for (let p of pages) {
-                if (document.getElementById('page' + p.index).checked) {
-                    promises.push(
-                        browser.bookmarks.create({
-                                parentId: folder,
-                                title: p.title,
-                                url: p.url,
-                            }));
-                }
-            }
-            Promise.all(promises).then((bookmarks) => {
-                    p2 = [];
-                    bookmarks.forEach((b, i) => {
-                            p2.push(browser.bookmarks.move(b.id, {index: i}));
-                        });
-                    Promise.all(p2).then(close);
-                });
-        }
-        
+document.getElementById('ok').addEventListener('click', async function(ev) {
         ev.target.disabled = true;
-        
+        let folder = document.getElementById('folder').value;
         if (document.getElementById('name').value.length > 0) {
-            browser.bookmarks.create({
+            folder = (await browser.bookmarks.create({
                     title: document.getElementById('name').value, 
                     parentId: document.getElementById('folder').value
-                }).then((node) => {f(node.id)});
-        } else {
-            f(document.getElementById('folder').value);
+                })).id;
         }
+
+        let promises = [];
+
+        for (let p of pages) {
+            if (document.getElementById('page' + p.index).checked) {
+                promises.push(
+                    browser.bookmarks.create({
+                            parentId: folder,
+                            title: p.title,
+                            url: p.url,
+                        }));
+            }
+        }
+        let bookmarks = await Promise.all(promises);
+
+        promises = [];
+        bookmarks.forEach((b, i) => {
+                promises.push(browser.bookmarks.move(b.id, {index: i}));
+            });
+
+        await Promise.all(promises);
+
+        close();
     });
 
 document.getElementById('cancel').addEventListener('click', close);
