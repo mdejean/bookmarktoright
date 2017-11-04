@@ -71,8 +71,13 @@ function close() {
 }
 
 document.getElementById('ok').addEventListener('click', async function(ev) {
+        //disable the button so it can't be clicked again
         ev.target.disabled = true;
+
+        //if name is blank put the bookmarks in the chosen folder
         let folder = document.getElementById('folder').value;
+
+        //otherwise create one with name `name` in `folder`
         if (document.getElementById('name').value.length > 0) {
             folder = (await browser.bookmarks.create({
                     title: document.getElementById('name').value, 
@@ -80,26 +85,19 @@ document.getElementById('ok').addEventListener('click', async function(ev) {
                 })).id;
         }
 
-        let promises = [];
-
-        for (let p of pages) {
-            if (document.getElementById('page' + p.index).checked) {
-                promises.push(
-                    browser.bookmarks.create({
+        let chosen = pages
+            .filter((p) => document.getElementById('page' + p.index).checked);
+        let bookmarks = await Promise.all(
+            chosen.map((p) => browser.bookmarks.create({
                             parentId: folder,
                             title: p.title,
                             url: p.url,
-                        }));
-            }
-        }
-        let bookmarks = await Promise.all(promises);
+                        })
+                ));
 
-        promises = [];
-        bookmarks.forEach((b, i) => {
-                promises.push(browser.bookmarks.move(b.id, {index: i}));
-            });
-
-        await Promise.all(promises);
+        await Promise.all(bookmarks.map((b, i) => 
+                browser.bookmarks.move(b.id, {index: i})
+            ));
 
         close();
     });
