@@ -99,6 +99,14 @@ document.getElementById('ok').addEventListener('click', async function(ev) {
                 browser.bookmarks.move(b.id, {index: i})
             ));
 
+        if (document.getElementById('close').checked) {
+            try {
+                await browser.tabs.remove(chosen.map((p) => p.id));
+            } catch (e) {
+                //user has closed tab - "invalid tab id"
+            }
+        }
+
         close();
     });
 
