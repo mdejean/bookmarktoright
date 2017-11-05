@@ -1,6 +1,6 @@
 {
-  "name": "Bookmark Tabs to the Right",
-  "description": "Bookmark tabs to the right of a tab by right clicking or the current tab with a key command",
+  "name": "__MSG_extensionName__",
+  "description": "__MSG_extensionDescription__",
   "homepage_url": "https://github.com/mdejean/bookmarktoright",
   "manifest_version": 2,
   "version": "1.2",
@@ -14,11 +14,11 @@
       "strict_min_version": "55.0a1"
     }
   },
-  
+
   "commands": {
     "bookmark-right": {
       "suggested_key": { "default": "Ctrl+Shift+Period" },
-      "description": "Bookmark tabs to the right"
+      "description": "__MSG_commandDescription__"
     }
   },
 
@@ -27,8 +27,10 @@
     "tabs",
     "contextMenus"
   ],
-  
+
   "background": {
     "scripts": ["background.js"]
-  }
+  },
+
+  "default_locale": "en"
 }

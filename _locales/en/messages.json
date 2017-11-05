@@ -1,0 +1,61 @@
+{
+  "extensionName": {
+    "message": "Bookmark Tabs to the Right",
+    "description": "Name of the extension."
+  },
+
+  "extensionDescription": {
+    "message": "Bookmark tabs to the right of a tab by right clicking or the current tab with a key command",
+    "description": "Description of the extension."
+  },
+
+  "menuItem": {
+    "message": "Bookmark Tabs to the Right",
+    "description": "Tab context menu item"
+  },
+
+  "commandDescription": {
+    "message": "Bookmark tabs to the right",
+    "description": "Keyboard shortcut description"
+  },
+
+  "windowTitle": {
+    "message": "Bookmark Tabs",
+    "description": "Window title"
+  },
+
+  "bookmarksLabel": {
+    "message": "Bookmarks:",
+    "description": "Boomarks list label"
+  },
+
+  "folderNameLabel": {
+    "message": "Name:",
+    "description": "Folder name label"
+  },
+
+  "folderNamePlaceholder": {
+    "message": "[Folder Name]",
+    "description": "Folder name placeholder text"
+  },
+
+  "folderLabel": {
+    "message": "Folder:",
+    "description": "Folder select label"
+  },
+
+  "closeAfterLabel": {
+    "message": "Close tabs after bookmarking",
+    "description": "Close after bookmarking label"
+  },
+
+  "addBookmarksButton": {
+    "message": "Add Bookmarks",
+    "description": "Add bookmarks button label"
+  },
+
+  "cancelButton": {
+    "message": "Cancel",
+    "description": "Cancel button label"
+  }
+}

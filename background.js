@@ -1,6 +1,6 @@
 function showBookmarkWindow(tabs) {
     browser.windows.create({
-        type: "popup", url: "/bookmarks.html",
+        type: 'popup', url: '/bookmarks.html',
         top: 0, left: 0, width: 500, height: 250
     }).then(
         (window) => {
@@ -8,7 +8,7 @@ function showBookmarkWindow(tabs) {
                 (tabid, change, tab) => {
                     if (tabid == window.tabs[0].id && tab.status == 'complete') {
                         browser.runtime.sendMessage({
-                                type: "add-bookmarks",
+                                type: 'add-bookmarks',
                                 pages: tabs.map((t) => ({
                                             id: t.id,
                                             index: t.index, 
@@ -32,7 +32,7 @@ function bookmarkRight(window, index) {
 browser.contextMenus.create({
         contexts: ['tab'],
         id: 'bookmark-right',
-        title: "Bookmark Tabs to the Right"
+        title: browser.i18n.getMessage('menuItem')
     });
 browser.contextMenus.onClicked.addListener((info, tab) => {
         if (info.menuItemId == 'bookmark-right') {

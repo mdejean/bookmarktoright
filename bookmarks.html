@@ -2,26 +2,27 @@
 
 <html>
     <head>
-        <meta charset="utf-8">
-        <link rel="stylesheet" href="bookmarks.css"/>
-        <title>Bookmark Tabs</title>
+        <meta charset='utf-8'>
+        <link rel='stylesheet' href='bookmarks.css'/>
+        <title>__MSG_windowTitle__</title>
     </head>
 
     <body>
         <form class='content' action='javascript:void(0);'>
-            <label>Bookmarks:</label>
+            <label>__MSG_bookmarksLabel__</label>
             <div class='grid' id='bookmarks'>
             </div>
-            <label>Name: </label>
-            <input type='text' id='name' placeholder='[Folder Name]'>
-            <label>Folder:</label>
+            <label>__MSG_folderNameLabel__</label>
+            <input type='text' id='name' placeholder="__MSG_folderNamePlaceholder__">
+            <label>__MSG_folderLabel__</label>
             <select id='folder'></select>
-            <label class='check'><input type=checkbox id='close'>Close tabs after bookmarking</label>
+            <label class='check'><input type=checkbox id='close'>__MSG_closeAfterLabel__</label>
             <div class='buttons'>
-                <button id='ok'>Add Bookmarks</button>
-                <button id='cancel' type='button'>Cancel</button>
+                <button id='ok'>__MSG_addBookmarksButton__</button>
+                <button id='cancel' type='button'>__MSG_cancelButton__</button>
             </div>
         </form>
-        <script src="bookmarks.js"></script>
+        <script src='bookmarks.js'></script>
+        <script src='i18n.js'></script>
     </body>
 </html>
