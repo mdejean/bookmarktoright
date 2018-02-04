@@ -24,7 +24,17 @@ async function showBookmarkWindow(tabs) {
 
 async function bookmarkRight(window, index) {
     let tabs = await browser.tabs.query({windowId: window});
-    showBookmarkWindow(tabs.filter((t) => t.index > index));
+
+    //to the right of index
+    tabs = tabs.filter((t) => t.index > index);
+
+    //remove duplicate tabs
+    tabs = tabs.filter((t1, i1) =>
+            tabs.every((t2, i2) =>
+                i2 >= i1 || t2.url != t1.url
+            ));
+
+    showBookmarkWindow(tabs);
 }
 
 browser.contextMenus.create({
