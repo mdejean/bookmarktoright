@@ -1,32 +1,28 @@
-function showBookmarkWindow(tabs) {
-    browser.windows.create({
-        type: 'popup', url: '/bookmarks.html',
-        top: 0, left: 0, width: 500, height: 250
-    }).then(
-        (window) => {
-            browser.tabs.onUpdated.addListener(
-                (tabid, change, tab) => {
-                    if (tabid == window.tabs[0].id && tab.status == 'complete') {
-                        browser.runtime.sendMessage({
-                                type: 'add-bookmarks',
-                                pages: tabs.map((t) => ({
-                                            id: t.id,
-                                            index: t.index, 
-                                            title: t.title, 
-                                            url: t.url})
-                                        )
-                            });
-                        browser.tabs.onUpdated.removeListener(this);
-                    }
+async function showBookmarkWindow(tabs) {
+    let window = await browser.windows.create({
+            type: 'popup', url: '/bookmarks.html',
+            top: 0, left: 0, width: 500, height: 250
+        });
+    browser.tabs.onUpdated.addListener(
+        (tabid, change, tab) => {
+            if (tabid != window.tabs[0].id || tab.status != 'complete')
+                return;
+            browser.runtime.sendMessage({
+                    type: 'add-bookmarks',
+                    pages: tabs.map((t) => ({
+                                id: t.id,
+                                index: t.index,
+                                title: t.title,
+                                url: t.url})
+                            )
                 });
+            browser.tabs.onUpdated.removeListener(this);
         });
 }
 
-function bookmarkRight(window, index) {
-    browser.tabs.query({windowId: window}).then(
-        (tabs) => {
-            showBookmarkWindow(tabs.filter((t) => t.index > index));
-        });
+async function bookmarkRight(window, index) {
+    let tabs = await browser.tabs.query({windowId: window});
+    showBookmarkWindow(tabs.filter((t) => t.index > index));
 }
 
 browser.contextMenus.create({
@@ -40,13 +36,12 @@ browser.contextMenus.onClicked.addListener((info, tab) => {
         }
     });
 
-browser.commands.onCommand.addListener((command) => {
+browser.commands.onCommand.addListener(async (command) => {
         if (command == 'bookmark-right') {
-            browser.tabs.query({
+            let tabs = await browser.tabs.query({
                     active: true,
                     windowId: browser.windows.WINDOW_ID_CURRENT
-                }).then((tabs) => {
-                    bookmarkRight(browser.windows.WINDOW_ID_CURRENT, tabs[0].index);
                 });
+            bookmarkRight(browser.windows.WINDOW_ID_CURRENT, tabs[0].index);
         }
     });
