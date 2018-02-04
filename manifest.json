@@ -3,7 +3,7 @@
   "description": "__MSG_extensionDescription__",
   "homepage_url": "https://github.com/mdejean/bookmarktoright",
   "manifest_version": 2,
-  "version": "1.2",
+  "version": "1.3",
   "icons": {
     "16": "bookmarkright.svg",
     "48": "bookmarkright.svg",
