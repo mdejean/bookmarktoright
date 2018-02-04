@@ -4,9 +4,11 @@ async function showBookmarkWindow(tabs) {
             top: 0, left: 0, width: 500, height: 250
         });
     browser.tabs.onUpdated.addListener(
-        (tabid, change, tab) => {
-            if (tabid != window.tabs[0].id || tab.status != 'complete')
+        function update(tabid, change, tab) {
+            if (tabid != window.tabs[0].id || tab.url == 'about:blank' || change.status != 'complete') {
                 return;
+            }
+
             browser.runtime.sendMessage({
                     type: 'add-bookmarks',
                     pages: tabs.map((t) => ({
@@ -16,7 +18,7 @@ async function showBookmarkWindow(tabs) {
                                 url: t.url})
                             )
                 });
-            browser.tabs.onUpdated.removeListener(this);
+            browser.tabs.onUpdated.removeListener(update);
         });
 }
 
