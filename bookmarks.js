@@ -74,19 +74,27 @@ document.getElementById('ok').addEventListener('click', async function(ev) {
         //disable the button so it can't be clicked again
         ev.target.disabled = true;
 
-        //if name is blank put the bookmarks in the chosen folder
-        let folder = document.getElementById('folder').value;
+        //filter out pages the user has unchecked
+        let chosen = pages.filter((p) => 
+                document.getElementById('page' + p.index).checked);
 
-        //otherwise create one with name `name` in `folder`
+        let folder = null;
+
+        //if name isn't blank create the folder `name` in `folder`
         if (document.getElementById('name').value.length > 0) {
             folder = (await browser.bookmarks.create({
                     title: document.getElementById('name').value, 
                     parentId: document.getElementById('folder').value
                 })).id;
+        } else {
+            //if name is blank put the bookmarks in `folder`
+            folder = document.getElementById('folder').value
+
+            //remove bookmarks which duplicate existing ones
+            let existing = await browser.bookmarks.getChildren(folder);
+            chosen = chosen.filter((p) => !existing.some((b) => b.url == p.url));
         }
 
-        let chosen = pages
-            .filter((p) => document.getElementById('page' + p.index).checked);
         let bookmarks = await Promise.all(
             chosen.map((p) => browser.bookmarks.create({
                             parentId: folder,
