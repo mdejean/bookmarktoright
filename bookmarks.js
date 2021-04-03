@@ -79,6 +79,7 @@ document.getElementById('ok').addEventListener('click', async function(ev) {
                 document.getElementById('page' + p.index).checked);
 
         let folder = null;
+        let last_index = 0;
 
         //if name isn't blank create the folder `name` in `folder`
         if (document.getElementById('name').value.length > 0) {
@@ -93,19 +94,23 @@ document.getElementById('ok').addEventListener('click', async function(ev) {
             //remove bookmarks which duplicate existing ones
             let existing = await browser.bookmarks.getChildren(folder);
             chosen = chosen.filter((p) => !existing.some((b) => b.url == p.url));
+
+            last_index = existing[existing.length - 1].index;
         }
 
         let bookmarks = await Promise.all(
             chosen.map((p) => browser.bookmarks.create({
                             parentId: folder,
                             title: p.title,
-                            url: p.url,
+                            url: p.url
                         })
                 ));
 
-        await Promise.all(bookmarks.map((b, i) => 
-                browser.bookmarks.move(b.id, {index: i})
-            ));
+        //reorder the bookmarks at the end of the folder
+        //done synchronously to avoid a potential bug?
+        for (let i = 0; i < bookmarks.length; i++) {
+            await browser.bookmarks.move(bookmarks[i].id, {index: last_index + 1 + i});
+        }
 
         if (document.getElementById('close').checked) {
             try {
